@@ -1,9 +1,11 @@
 # Temporal segmentation of sign language videos
-This repository provides code for following two papers:
+
+This readme is mostly WIP for now.
+
+Forked from the [official repository](https://github.com/RenzKa/sign-segmentation) of the following two papers:
 
 - [Katrin Renz](https://www.katrinrenz.de), [Nicolaj C. Stache](https://www.hs-heilbronn.de/nicolaj.stache), [Samuel Albanie](https://www.robots.ox.ac.uk/~albanie/) and [Gül Varol](https://www.robots.ox.ac.uk/~gul),
 *Sign language segmentation with temporal convolutional networks*, ICASSP 2021.  [[arXiv]](https://arxiv.org/abs/2011.12986)
-
 - [Katrin Renz](https://www.katrinrenz.de), [Nicolaj C. Stache](https://www.hs-heilbronn.de/nicolaj.stache), [Neil Fox](https://www.ucl.ac.uk/dcal/people/research-staff/neil-fox), [Gül Varol](https://www.robots.ox.ac.uk/~gul) and [Samuel Albanie](https://www.robots.ox.ac.uk/~albanie/),
 *Sign Segmentation with Changepoint-Modulated Pseudo-Labelling*, CVPRW 2021. [[arXiv]](https://arxiv.org/abs/2104.13817)
 
@@ -26,11 +28,12 @@ This repository provides code for following two papers:
 
 ``` bash
 # Clone this repository
-git clone git@github.com:RenzKa/sign-segmentation.git
+git clone git@github.com:arthur-cahu/sign-segmentation.git
 cd sign-segmentation/
 # Create signseg_env environment
 conda env create -f environment.yml
-conda activate signseg_env
+conda activate signseg
+conda install pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.1 -c pytorch
 ```
 
 ## Data and models
@@ -115,7 +118,7 @@ During the training a `.log` file for tensorboard is generated. In addition the 
 1. Save pre-trained model in ```models/ms-tcn/*.model```
 2. a) Extract pseudo-labels before extracting CMPL-labels: [Extract only PL](https://drive.google.com/file/d/1ixM0leAeR_JU2n-yZuo6O7zA1h_amUBR/view?usp=sharing) | [Extract CMPL](https://drive.google.com/file/d/1juiYMWX_V8Au8LAoPYycgD5ejYA8ZlZg/view?usp=sharing) | [Extract PL and CMPL](https://drive.google.com/file/d/1lvbAgqCdmxsPcAZysGJVGTsjr7IgCplj/view?usp=sharing)
  b) Extract Changepoints separately for training: [Extract CP](https://drive.google.com/file/d/1urZxzZ4qlK46Ad5_8SJDzXVu4NFlGbNn/view?usp=sharing)
--> specify correct model path
+ -> specify correct model path
 
 * Pseudo-labelling techniques on PHOENIX14
 
