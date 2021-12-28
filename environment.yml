@@ -1,5 +1,5 @@
 
-name: signseg_env
+name: signseg
 
 dependencies:
   - pip
@@ -15,7 +15,6 @@ dependencies:
   - pip:
     - zsvision==0.5.3
     - pympi_ling==1.69
-    - torch==1.4.0
     - opencv_python==4.2.0.34
     - beartype==0.5.1
     - ruptures==1.0.6
