@@ -3,7 +3,10 @@
 *.jpg
 *.pkl
 *.model
+*.tar
+*.mat
 run/
+exps/
 __pycache__/
 *.py[cod]
 *$py.class
