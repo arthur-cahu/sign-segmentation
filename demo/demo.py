@@ -16,7 +16,7 @@ import torch
 import scipy.special
 import matplotlib.pyplot as plt
 from beartype import beartype
-from zsvision.zs_utils import BlockTimer
+from zsvision.zs_utils import BlockTimer,loadmat
 from tqdm import tqdm
 import models
 from utils_demo import torch_to_list, to_torch, im_to_numpy, im_to_torch, resize_generic, color_normalize, save_pred, generate_vtt_file
