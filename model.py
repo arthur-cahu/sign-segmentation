@@ -14,6 +14,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch import optim
 from torch.utils.tensorboard import SummaryWriter
+from transformer import ASFormer
 
 from utils import Bar
 from utils.viz import viz_results_paper
@@ -72,8 +73,30 @@ class DilatedResidualLayer(nn.Module):
 
 
 class Trainer:
-    def __init__(self, num_blocks, num_layers, num_f_maps, dim, num_classes, device, weights, save_dir):
-        self.model = MultiStageModel(num_blocks, num_layers, num_f_maps, dim, num_classes)
+    def __init__(self, num_classes, device, weights, save_dir, args):
+        # MultiStageModel: num_blocks, num_layers, num_f_maps, dim, num_classes
+        # asformer: num_decoders(3), num_layers, r1, r2, num_f_maps, input_dim, num_classes, channel_masking_rate
+        if args.model == 'mstcn':
+            self.model = MultiStageModel(
+                args.num_stages,
+                args.num_layers,
+                args.num_f_maps,
+                args.features_dim,
+                num_classes
+            )
+        elif args.model == 'asformer':
+            self.model = ASFormer(
+                args.num_decoders, # paper: 3
+                args.num_layers, # paper: 9
+                args.r1, # paper: 2
+                args.r2, # paper: 2
+                args.num_f_maps, # paper: 64
+                args.features_dim, # paper: 2048
+                num_classes,
+                args.channel_masking_rate # paper: 0.3
+            )
+        else:
+            raise ValueError("Unknown model name.")
         if weights is None:
             self.ce = nn.CrossEntropyLoss(ignore_index=-100)
         else:

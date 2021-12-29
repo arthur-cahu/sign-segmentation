@@ -22,15 +22,12 @@ def main(args, device, model_load_dir, model_save_dir, results_save_dir):
 
         print(f'Start training.')
         trainer = Trainer(
-                    args.num_stages,
-                    args.num_layers,
-                    args.num_f_maps,
-                    args.features_dim,
-                    train_loader.num_classes,
-                    device,
-                    train_loader.weights,
-                    model_save_dir
-                    )
+            train_loader.num_classes,
+            device,
+            train_loader.weights,
+            model_save_dir,
+            args
+        )
 
         eval_args = [
             args,
@@ -188,16 +185,23 @@ if __name__ == "__main__":
     parser.add_argument('--CMSL_th_insert', default=4, type=int)
     parser.add_argument('--CMSL_th_refine', default=4, type=int)
 
-    ### MS-TCN HYPERPARAMETER
-    parser.add_argument('--num_stages', default=4, type=int)
-    parser.add_argument('--num_layers', default=10, type=int)
-    parser.add_argument('--num_f_maps', default=64, type=int)
-    parser.add_argument('--features_dim', default=1024, type=int)
+    ### SHARED MODEL HYPERPARAMETERS
     parser.add_argument('--bz', default=8, type=int)
     parser.add_argument('--lr', default=0.0005, type=float)
-    parser.add_argument('--num_epochs', default=50, type=int)
+    parser.add_argument('--num_epochs', default=50, type=int) # asformer: 120
+    parser.add_argument('--features_dim', default=1024, type=int, help="Dimension of the input i3d features.")
+    parser.add_argument('--model', default="mstcn", choices=["mstcn", "asformer"], help="Model to use.")
+    parser.add_argument('--num_f_maps', default=64, type=int)
+    parser.add_argument('--num_layers', default=10, type=int, help="Number of layers per stage or encoder/decoder.") # asformer: 9
     parser.add_argument('--extract_epoch', default=10, type=int)
     parser.add_argument('--weights', default='opt', help="None, [1., 5.], 'opt'")
+    ### MS-TCN HYPERPARAMETERS
+    parser.add_argument('--num_stages', default=4, type=int, help="MS-TCN only.")
+    ### ASFORMER HYPERPARAMETERS
+    parser.add_argument('--num_decoders', default=3, type=int, help="ASFormer only.")
+    parser.add_argument('--r1', default=2, type=int, help="ASFormer only: reduces the output dimension of the 'queries' and 'keys' convolutions in each attention layer.")
+    parser.add_argument('--r2', default=2, type=int, help="ASFormer only: reduces the output dimension of the 'values' convolution in each attention layer.")
+    parser.add_argument('--channel-masking-rate', default=0.3, type=float, help="ASFormer only: encoder dropout probability.")
 
     parser.add_argument('--uniform', default=0, type=int)
     parser.add_argument('--regression', default=0, type=int)
