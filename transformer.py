@@ -252,6 +252,24 @@ class Decoder(nn.Module):
 
 class ASFormer(nn.Module):
     def __init__(self, num_decoders, num_layers, r1, r2, num_f_maps, input_dim, num_classes, channel_masking_rate):
+        """The ASFormer model.
+
+        Parameters
+        ----------
+        num_decoders : int
+        num_layers : int
+            Number of encoder (resp. decoder) blocks in the encoder (resp. each decoder).
+        r1 : int
+            Reduces the output dimension of the 'queries' and 'keys' convolutions in each attention layer.
+        r2 : int
+            Reduces the output dimension of the 'values' convolution in each attention layer.
+        num_f_maps : int
+            number of feature maps
+        input_dim : int
+        num_classes : int
+        channel_masking_rate : float
+            Encoder dropout probability.
+        """
         super(ASFormer, self).__init__()
         self.encoder = Encoder(num_layers, r1, r2, num_f_maps, input_dim, num_classes, channel_masking_rate, att_type='sliding_att', alpha=1)
         self.decoders = nn.ModuleList([copy.deepcopy(Decoder(num_layers, r1, r2, num_f_maps, num_classes, num_classes, att_type='sliding_att', alpha=exponential_decrease(s))) for s in range(num_decoders)]) # num_decoders
