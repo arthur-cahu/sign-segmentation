@@ -33,10 +33,17 @@ cd sign-segmentation/
 # Create signseg_env environment
 conda env create -f environment.yml
 conda activate signseg
-conda install pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.1 -c pytorch
+conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
 ```
 
+Notably, this has been tested with the following package versions:
+
+- `python=3.9.7`
+- `pytorch=1.10.1`
+- `numpy=1.21.2`
+
 ## Data and models
+
 You can download our pretrained models (`models.zip [302MB]`) and data (`data.zip [5.5GB]`) used in the experiments [here](https://drive.google.com/drive/folders/17DaatdfD4GRnLJJ0RX5TcSfHGMxMS0Lm?usp=sharing) or by executing `download/download_*.sh`. The unzipped `data/` and `models/` folders should be located on the root directory of the repository (for using the demo downloading the `models` folder is sufficient).
 
 
@@ -118,7 +125,7 @@ During the training a `.log` file for tensorboard is generated. In addition the 
 1. Save pre-trained model in ```models/ms-tcn/*.model```
 2. a) Extract pseudo-labels before extracting CMPL-labels: [Extract only PL](https://drive.google.com/file/d/1ixM0leAeR_JU2n-yZuo6O7zA1h_amUBR/view?usp=sharing) | [Extract CMPL](https://drive.google.com/file/d/1juiYMWX_V8Au8LAoPYycgD5ejYA8ZlZg/view?usp=sharing) | [Extract PL and CMPL](https://drive.google.com/file/d/1lvbAgqCdmxsPcAZysGJVGTsjr7IgCplj/view?usp=sharing)
  b) Extract Changepoints separately for training: [Extract CP](https://drive.google.com/file/d/1urZxzZ4qlK46Ad5_8SJDzXVu4NFlGbNn/view?usp=sharing)
- -> specify correct model path
+  -> specify correct model path
 
 * Pseudo-labelling techniques on PHOENIX14
 
