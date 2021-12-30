@@ -3,6 +3,7 @@ import sys
 import os
 import datetime
 import pickle
+import warnings
 
 def get_labels_start_end_time(frame_wise_labels, bg_class=["Sign"]):
     """get list of start and end times of each interval/ segment.
@@ -155,6 +156,7 @@ def create_folders(args):
         model_save_dir: Path to the folder where the model is saved
         results_save_dir: Path to the folder where the (inference) results are saved
     """
+    model_name = args.model
     num_stages = args.num_stages
     num_layers = args.num_layers
     num_f_maps = args.num_f_maps
@@ -192,21 +194,29 @@ def create_folders(args):
     else:
         ssl_str = 'supervised'
 
+    if model_name == "mstcn":
+        specs_str = f"{model_name}_{num_stages}_{num_layers}_{num_f_maps}_{features_dim}_{bz}_{lr}_{weighted_str}"
+    elif model_name == "asformer":
+        specs_str = f"{model_name}_{args.num_decoders}_{num_layers}_{num_f_maps}_{features_dim}_{args.r1}_{args.r2}_{args.channel_masking_rate}_{bz}_{lr}_{weighted_str}"
+    else:
+        specs_str = f"{model_name}_{num_f_maps}_{features_dim}_{bz}_{lr}_{weighted_str}"
+        warnings.warn("Unknown model name; path will not reflect all model parameters")
+    
     # load pretrained model from given path
     if args.pretrained:
         model_load_dir = args.pretrained
     else:
         if args.action == 'predict':
-            model_load_dir = f"./exps/{args.folder}/models/{train_type}/traindata_{train_data}/{args.i3d_training}/{ssl_str}/{num_stages}_{num_layers}_{num_f_maps}_{features_dim}_{bz}_{lr}_{weighted_str}/seed_{args.seed}/epoch-{str(args.extract_epoch)}.model"  #+args.split
+            model_load_dir = f"./exps/{args.folder}/models/{train_type}/traindata_{train_data}/{args.i3d_training}/{ssl_str}/{specs_str}/seed_{args.seed}/epoch-{str(args.extract_epoch)}.model"  #+args.split
         else:
             model_load_dir = ''
     if not os.path.exists(model_load_dir) and ((args.pretrained and args.action == 'train') or args.action == 'predict'):
         print(f'Pre-trained model not existing at: {model_load_dir}')
         sys.exit()
 
-    model_save_dir = f"./exps/{args.folder}/models/{train_type}/traindata_{train_data}/{args.i3d_training}/{ssl_str}/{num_stages}_{num_layers}_{num_f_maps}_{features_dim}_{bz}_{lr}_{weighted_str}/seed_{args.seed}"
+    model_save_dir = f"./exps/{args.folder}/models/{train_type}/traindata_{train_data}/{args.i3d_training}/{ssl_str}/{specs_str}/seed_{args.seed}"
     if model_load_dir == '' or args.uniform:
-        results_save_dir = f"./exps/{args.folder}/results/{train_type}/traindata_{train_data}/testdata_{test_data}/{args.i3d_training}/{ssl_str}/{num_stages}_{num_layers}_{num_f_maps}_{features_dim}_{bz}_{lr}_{weighted_str}/seed_{args.seed}/th_{args.classification_threshold}"
+        results_save_dir = f"./exps/{args.folder}/results/{train_type}/traindata_{train_data}/testdata_{test_data}/{args.i3d_training}/{ssl_str}/{specs_str}/seed_{args.seed}/th_{args.classification_threshold}"
     else:
         results_save_dir = model_save_dir.replace('models', 'results').replace(f'traindata_{train_data}', f'traindata_{train_data}/testdata_{test_data}')
         results_save_dir = f'{results_save_dir}/th_{args.classification_threshold}'
