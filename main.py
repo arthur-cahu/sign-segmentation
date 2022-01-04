@@ -59,7 +59,9 @@ def main(args, device, model_load_dir, model_save_dir, results_save_dir):
             args.lr,
             device,
             eval_args,
-            pretrained=model_load_dir)
+            pretrained=model_load_dir,
+            dump_every=args.dump_every
+        )
 
     elif args.extract_save_pseudo_labels and args.pseudo_label_type != 'PL':
         # extract/ generate pseudo labels and save in "data/pseudo_labels"
@@ -193,6 +195,7 @@ if __name__ == "__main__":
     parser.add_argument('--num_layers', default=10, type=int, help="Number of layers per stage or encoder/decoder.") # asformer: 9
     parser.add_argument('--extract_epoch', default=10, type=int)
     parser.add_argument('--weights', default='opt', help="None, [1., 5.], 'opt'")
+    parser.add_argument('--dump_every', default=5, type=int, help="Frequency of the dumping of results into json files, in epochs.")
     ### MS-TCN HYPERPARAMETERS
     parser.add_argument('--num_stages', default=4, type=int, help="MS-TCN only.")
     ### ASFORMER HYPERPARAMETERS

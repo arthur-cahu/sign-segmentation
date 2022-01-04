@@ -111,7 +111,7 @@ class Trainer:
         self.train_result_dict = {}
         self.test_result_dict = {}
 
-    def train(self, save_dir, batch_gen, num_epochs, batch_size, learning_rate, device, eval_args, pretrained=''):
+    def train(self, save_dir, batch_gen, num_epochs, batch_size, learning_rate, device, eval_args, pretrained='', dump_every=5):
         self.model.train()
         self.model.to(device)
 
@@ -191,11 +191,14 @@ class Trainer:
             eval_args[1] = save_dir + "/epoch-" + str(epoch+1) + ".model"
             self.predict(*eval_args)
 
-        with open(f'{save_dir}/train_results.json', 'w') as fp:
-            json.dump(self.train_result_dict, fp, indent=4)
-        with open(f'{save_dir}/eval_results.json', 'w') as fp:
-            json.dump(self.test_result_dict, fp, indent=4)
-        self.writer.close()
+            if (epoch+1) % dump_every == 0 or epoch + 1 == num_epochs:
+                print("Dumping results...")
+                with open(f'{save_dir}/train_results.json', 'w') as fp:
+                    json.dump(self.train_result_dict, fp, indent=4)
+                with open(f'{save_dir}/eval_results.json', 'w') as fp:
+                    json.dump(self.test_result_dict, fp, indent=4)
+                self.writer.close()
+                print("done")
 
 
     def predict(
