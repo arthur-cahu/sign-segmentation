@@ -91,14 +91,12 @@ def main(args, device, model_load_dir, model_save_dir, results_save_dir):
             extract_save_PL = 0
 
         trainer = Trainer(
-            args.num_stages,
-            args.num_layers,
-            args.num_f_maps,
-            args.features_dim,
             test_loader.num_classes,
             device,
             test_loader.weights,
-            results_save_dir)
+            model_save_dir,
+            args
+        )
 
         trainer.predict(
             args,
