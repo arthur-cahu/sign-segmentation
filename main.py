@@ -201,7 +201,7 @@ if __name__ == "__main__":
     parser.add_argument('--num_decoders', default=3, type=int, help="ASFormer only.")
     parser.add_argument('--r1', default=2, type=int, help="ASFormer only: reduces the output dimension of the 'queries' and 'keys' convolutions in each attention layer.")
     parser.add_argument('--r2', default=2, type=int, help="ASFormer only: reduces the output dimension of the 'values' convolution in each attention layer.")
-    parser.add_argument('--channel-masking-rate', default=0.3, type=float, help="ASFormer only: encoder dropout probability.")
+    parser.add_argument('--channel_masking_rate', default=0.3, type=float, help="ASFormer only: encoder dropout probability.")
 
     parser.add_argument('--uniform', default=0, type=int)
     parser.add_argument('--regression', default=0, type=int)
