@@ -100,7 +100,7 @@ During the training a `.log` file for tensorboard is generated. In addition the 
 
 |ID | Model | `num_decoders` | `num_layers` | mF1B | mF1S |
 |   -   |   -  |   -  |   -   |   -   |   -   |
-|1 | MS-TCN (Renz *et al.*) |  | 10 |  |  |
+|1 | MS-TCN (Renz *et al.*) |  | 10 | 68.68 | 47.71 |
 | A | MS-TCN (control) |      | 10 | 70.37 |47.86 |
 | B | ASFormer (default) | 3 | 9 | 70.41 |50.85 |
 | C | ASFormer | 3 | 7    | **70.80** |49.39 |
