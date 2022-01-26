@@ -98,10 +98,13 @@ My own experiments revolved around training either MS-TCN or ASFormer (see [`tra
 Run the corresponding command (see below) to train the model with pre-extracted features on BSL Corpus.
 During the training a `.log` file for tensorboard is generated. In addition the metrics get saved in `train_progress.txt`.
 
-|ID | Model | mF1B | mF1S |
-|   -   |   -  |   -  |   -   |
-| A | MS-TCN | 70.37 |47.86 |
-| B | ASFormer (default parameters) | 70.41 |50.85 |
+|ID | Model | I | J | mF1B | mF1S |
+|   -   |   -  |   -  |   -   |   -   |   -   |
+|1 | MS-TCN (Renz *et al.*) |  |  |  |  |
+| A | MS-TCN (control) |      |      | 70.37 |47.86 |
+| B | ASFormer (default) | 3 | 9 | 70.41 |50.85 |
+| C | ASFormer | 3 | 7    | **70.80** |49.39 |
+| D | ASFormer | 4    | 9    | 70.70 |**52.76** |
 
 Example of training command for MS-TCN:
 
