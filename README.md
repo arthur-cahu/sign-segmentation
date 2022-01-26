@@ -33,12 +33,12 @@ Notably, this has been tested with the following package versions:
 
 ## Data and models
 
-You can download Renz et al.'s pretrained models (`models.zip [302MB]`) and data (`data.zip [5.5GB]`) used in the experiments [here](https://drive.google.com/drive/folders/17DaatdfD4GRnLJJ0RX5TcSfHGMxMS0Lm?usp=sharing) or by executing `download/download_*.sh`. The unzipped `data/` and `models/` folders should be located on the root directory of the repository (for using the demo downloading the `models` folder is sufficient).
+You can download Renz *et al.*'s pretrained models (`models.zip [302MB]`) and data (`data.zip [5.5GB]`) used in the experiments [here](https://drive.google.com/drive/folders/17DaatdfD4GRnLJJ0RX5TcSfHGMxMS0Lm?usp=sharing) or by executing `download/download_*.sh`. The unzipped `data/` and `models/` folders should be located on the root directory of the repository (for using the demo downloading the `models` folder is sufficient).
 
 
 ### Data:
 Please cite the original datasets when using the data: [BSL Corpus](https://bslcorpusproject.org/cava/acknowledgements-and-citation/) | [Phoenix14](https://www-i6.informatik.rwth-aachen.de/~koller/RWTH-PHOENIX/).
-Renz et al. provide the pre-extracted features and metadata. See [here](data/README.md) for a detailed description of the data files. 
+Renz *et al.* provide the pre-extracted features and metadata. See [here](data/README.md) for a detailed description of the data files. 
 
 - Features: `data/features/*/*/features.mat`
 - Metadata: `data/info/*/info.pkl`
@@ -59,7 +59,7 @@ sign-segmentation/models/
 ```
 ## Demo (untested)
 The demo folder contains a sample script to estimate the segments of a given sign language video. It is also possible to use pre-extracted I3D features as a starting point, and only apply the MS-TCN model.
-`--generate_vtt` generates a `.vtt` file which can be used with [Renz et al.'s modified version of the VIA annotation tool](https://github.com/RenzKa/VIA_sign-language-annotation):
+`--generate_vtt` generates a `.vtt` file which can be used with [Renz *et al.*'s modified version of the VIA annotation tool](https://github.com/RenzKa/VIA_sign-language-annotation):
 
 ```
 usage: demo.py [-h] [--starting_point {video,feature}]
@@ -106,7 +106,7 @@ During the training a `.log` file for tensorboard is generated. In addition the 
 | C | ASFormer | 3 | 7    | **70.80** |49.39 |
 | D | ASFormer | 4    | 9    | 70.70 |**52.76** |
 
-Example of training command for MS-TCN:
+Example training command for MS-TCN:
 
 ```bash
 python main.py --action train --model mstcn --extract_set train --train_data bslcp --test_data bslcp --num_epochs 10 --seed 0
@@ -147,7 +147,19 @@ If you use this code and data, please cite the following:
 }
 ```
 
+For the [ASFormer model](https://github.com/chinayi/asformer):
+
+```
+@inproceedings{chinayi_ASformer,  
+	author={Fangqiu Yi and Hongyu Wen and Tingting Jiang}, 
+	booktitle={The British Machine Vision Conference (BMVC)},   
+	title={ASFormer: Transformer for Action Segmentation},
+	year={2021},
+}
+```
+
 ## License
+
 The license in this repository only covers the code. For data.zip and models.zip we refer to the terms of conditions of original datasets.
 
 
